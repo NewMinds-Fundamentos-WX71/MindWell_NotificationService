@@ -10,6 +10,8 @@ using MindWell_NotificationService.Shared.Persistence.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//NotificationService
+
 // Add services to the container.
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
