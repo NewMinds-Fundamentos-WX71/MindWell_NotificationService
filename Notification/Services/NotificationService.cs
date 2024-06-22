@@ -26,6 +26,11 @@ public class NotificationService : INotificationService
         return await _notificationRepository.FindByIdAsync(id);
     }
 
+    public async Task<IEnumerable<Domain.Models.Notification>> ListAllByUserIdAsync(int userId)
+    {
+        return await _notificationRepository.FindAllByUserIdAsync(userId);
+    }
+
     public async Task<NotificationResponse> SaveAsync(Domain.Models.Notification notification)
     {
         try

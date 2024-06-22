@@ -21,6 +21,13 @@ public class NotificationRepository : BaseRepository , INotificationRepository
         return await _context.Notifications.FindAsync(id);
     }
 
+    public async Task<IEnumerable<Domain.Models.Notification>> FindAllByUserIdAsync(int userId)
+    {
+        return await _context.Notifications
+            .Where(n => n.User_id == userId)
+            .ToListAsync();
+    }
+
     public async Task AddAsync(Domain.Models.Notification notification)
     {
         await _context.Notifications.AddAsync(notification);

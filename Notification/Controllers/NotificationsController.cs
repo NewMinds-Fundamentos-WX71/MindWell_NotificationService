@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using MindWell_NotificationService.Notification.Domain.Communication;
 using MindWell_NotificationService.Notification.Domain.Services;
 using MindWell_NotificationService.Notification.Resources.GET;
 using MindWell_NotificationService.Notification.Resources.POST;
@@ -29,6 +30,32 @@ public class NotificationsController : ControllerBase
         var resources = _mapper.Map<IEnumerable<Domain.Models.Notification>, IEnumerable<NotificationResource>>(notifications);
         
         return resources;
+    }
+
+    [HttpGet("{id:int}")]
+    public async Task<IActionResult> GetByIdAsync(int id)
+    {
+        var notification = await _notificationService.GetByIdAsync(id);
+
+        if (notification == null)
+            return NotFound(new NotificationResponse("Notification not found.").Message);
+        
+        var resource = _mapper.Map<Domain.Models.Notification, NotificationResource>(notification);
+        
+        return Ok(resource);
+    }
+
+    [HttpGet("user/{id:int}")]
+    public async Task<IActionResult> GetAllByUserIdAsync(int id)
+    {
+        var notifications = await _notificationService.ListAllByUserIdAsync(id);
+        
+        if (notifications == null)
+            return NotFound(new NotificationResponse("Notification not found.").Message);
+        
+        var resources = _mapper.Map<IEnumerable<Domain.Models.Notification>, IEnumerable<NotificationResource>>(notifications);
+        
+        return Ok(resources);
     }
     
     [HttpPost]
