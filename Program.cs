@@ -50,12 +50,21 @@ using (var context = scope.ServiceProvider.GetService<AppDbContext>())
     context.Database.EnsureCreated();
 }
 
+/*// NO MOSTRAR SWAGGER EN PRODUCCION
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+}*/
+
+// MOSTRAR SWAGGER EN PRODUCCION
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+    c.RoutePrefix = string.Empty; // Serve Swagger at the app's root
+});
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
